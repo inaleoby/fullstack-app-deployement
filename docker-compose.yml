@@ -1,0 +1,55 @@
+#version: "3.9"
+
+services:
+  mongo:
+    image: mongo:6.0
+    container_name: mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: smartphoneDB
+    healthcheck:
+      test: ["CMD", "mongo", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+    networks:
+      - fullstack-network
+
+  backend:
+    image: espoir10/backend
+    container_name: backend
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      PORT: ${PORT}
+      MONGO_URI: ${MONGO_URI}
+      DELETE_CODE: ${DELETE_CODE}
+    depends_on:
+      mongo:
+        condition: service_healthy
+    networks:
+      - fullstack-network
+
+  frontend:
+    image: espoir10/frontend
+    container_name: frontend
+    restart: unless-stopped
+    ports:
+      - "5050:80"
+    depends_on:
+      backend:
+        condition: service_started
+    networks:
+      - fullstack-network
+
+volumes:
+  mongo-data:
+
+networks:
+  fullstack-network:
+    driver: bridge
+
