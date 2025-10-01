@@ -26,12 +26,12 @@ pipeline {
             }
         }*/
         
-        /*stage('LOGIN TO DOCKER HUB') { 
+        stage('LOGIN TO DOCKER HUB') { 
             steps {
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
             }
-        }*/
-
+        }
+        
         /*stage('PUSH IMAGES') {
             steps {
                 sh """
