@@ -17,10 +17,10 @@ pipeline {
         stage('BUILD IMAGES DOCKER') {
             steps {
                 dir('/Frontend') {
-                    sh "docker build . -t espoir10/frontend:${IMAGE_TAG} -t espoir10/${service}:latest"
+                    sh "docker build . -t espoir10/frontend:${IMAGE_TAG} -t espoir10/frontend:latest"
                     }
                 dir('/Backend') {
-                    sh "docker build . -t espoir10/backend:${IMAGE_TAG} -t espoir10/${service}:latest"
+                    sh "docker build . -t espoir10/backend:${IMAGE_TAG} -t espoir10/frontend:latest"
                     }
             }
         }
