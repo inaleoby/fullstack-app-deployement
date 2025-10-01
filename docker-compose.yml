@@ -21,9 +21,9 @@ services:
     ports:
       - "5000:5000"
     environment:
-      PORT: ${PORT}
-      MONGO_URI: ${MONGO_URI}
-      DELETE_CODE: ${DELETE_CODE}
+      PORT: 5000
+      MONGO_URI: mongodb://mongo:27017/smartphoneDB
+      DELETE_CODE: "123"
     depends_on:
       - mongo
     networks:
