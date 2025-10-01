@@ -45,8 +45,8 @@ pipeline {
         stage('DEPLOY') {
             steps {
                 sh """
-                docker-compose down  # Arrête les anciens conteneurs s'ils existent
-                docker-compose up -d  # Démarre les nouveaux conteneurs en arrière-plan
+                docker compose down  # Arrête les anciens conteneurs s'ils existent
+                docker compose up -d  # Démarre les nouveaux conteneurs en arrière-plan
                 """
             }
         }  
