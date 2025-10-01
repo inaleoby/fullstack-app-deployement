@@ -42,7 +42,7 @@ pipeline {
             }
         }*/
       
-        stage('DEPLOY') {
+        /*stage('DEPLOY') {
             steps {
                 sh """
                 
@@ -54,7 +54,25 @@ pipeline {
                 docker compose up -d  # Démarre les nouveaux conteneurs en arrière-plan
                 """
             }
-        }  
+        } */
+
+        stage('Deploy') {
+            steps {
+                script {
+                    // Génère .env à partir des variables Jenkins
+                    writeFile file: '.env', text: """
+                    PORT=${PORT}
+                    MONGO_URI=${MONGO_URI}
+                    DELETE_CODE=${DELETE_CODE}
+                    """
+
+                    // Relance docker-compose
+                    sh 'docker compose down'
+                    sh 'docker compose up -d'
+                }
+            }
+        }
+
     }
     post {
         always {
