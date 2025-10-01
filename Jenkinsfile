@@ -4,6 +4,9 @@ pipeline {
     environment {
         DOCKERHUB_CREDENTIALS = credentials('DOCKER-HUB')  // ID des credentials dans Jenkins
         IMAGE_TAG = "v${BUILD_NUMBER}"  // Tag dynamique basé sur le numéro de build (BUIL_NUMBER renvoit le numero du build)
+        PORT = "5000"
+        MONGO_URI = "mongodb://mongo:27017/smartphoneDB"
+        DELETE_CODE = "123"
     }
     stages {
         stage('CLONER DEPOT') {
@@ -11,7 +14,7 @@ pipeline {
                 checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'GIT-CRED', url: 'https://github.com/inaleoby/fullstack-app-deployement.git']])
             }
         }
-        stage('BUILD IMAGES') {
+        stage('BUILD IMAGES DOCKER') {
             steps {
                 dir('/Frontend') {
                     sh "docker build . -t espoir10/frontend:${IMAGE_TAG} -t espoir10/${service}:latest"
