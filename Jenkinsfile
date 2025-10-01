@@ -45,6 +45,11 @@ pipeline {
         stage('DEPLOY') {
             steps {
                 sh """
+                
+                export PORT=${PORT}
+                export MONGO_URI=${MONGO_URI}
+                export DELETE_CODE=${DELETE_CODE}
+
                 docker compose down  # Arrête les anciens conteneurs s'ils existent
                 docker compose up -d  # Démarre les nouveaux conteneurs en arrière-plan
                 """
