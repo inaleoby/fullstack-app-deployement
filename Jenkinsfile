@@ -9,11 +9,11 @@ pipeline {
         DELETE_CODE = "123"
     }
     stages {
-        stage('CLONER DEPOT') {
-            steps {
-                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'GIT-CRED', url: 'https://github.com/inaleoby/fullstack-app-deployement.git']])
-            }
-        }
+        //stage('CLONER DEPOT') {
+            //steps {
+               // checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'GIT-CRED', url: 'https://github.com/inaleoby/fullstack-app-deployement.git']])
+            //}
+        //}
         stage('BUILD IMAGES DOCKER') {
             steps {
                 dir('/Frontend') {
