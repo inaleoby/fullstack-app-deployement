@@ -11,12 +11,6 @@ services:
       MONGO_INITDB_DATABASE: smartphoneDB
     volumes:
       - mongo-data:/data/db
-    healthcheck:
-      test: ["CMD-SHELL", "mongo --eval 'db.adminCommand(\"ping\")' || exit 1"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 30s
     networks:
       - fullstack-network
 
@@ -31,8 +25,7 @@ services:
       MONGO_URI: ${MONGO_URI}
       DELETE_CODE: ${DELETE_CODE}
     depends_on:
-      mongo:
-        condition: service_healthy
+      - mongo
     networks:
       - fullstack-network
 
@@ -43,8 +36,7 @@ services:
     ports:
       - "5050:80"
     depends_on:
-      backend:
-        condition: service_started
+      - backend
     networks:
       - fullstack-network
 

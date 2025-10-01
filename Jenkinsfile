@@ -15,7 +15,7 @@ pipeline {
                // checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'GIT-CRED', url: 'https://github.com/inaleoby/fullstack-app-deployement.git']])
             //}
         //}
-        stage('BUILD IMAGES DOCKER') {
+        /*stage('BUILD IMAGES DOCKER') {
             steps {
                 dir('Frontend') {
                     sh "docker build . -t espoir10/frontend:${IMAGE_TAG} -t espoir10/frontend:${LASTEST_TAG}"
@@ -24,14 +24,14 @@ pipeline {
                     sh "docker build . -t espoir10/backend:${IMAGE_TAG} -t espoir10/backend:${LASTEST_TAG}"
                     }
             }
-        }
+        }*/
         
         stage('LOGIN TO DOCKER HUB') { 
             steps {
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
             }
         }
-        stage('PUSH IMAGES') {
+        /*stage('PUSH IMAGES') {
             steps {
                 sh """
                 docker push espoir10/frontend:${IMAGE_TAG}
@@ -40,7 +40,7 @@ pipeline {
                 docker push espoir10/backend:${LASTEST_TAG}
                 """
             }
-        }
+        }*/
       
         stage('DEPLOY') {
             steps {
