@@ -21,7 +21,7 @@ pipeline {
                     sh "docker build . -t espoir10/frontend:${IMAGE_TAG} -t espoir10/frontend:${LASTEST_TAG}"
                     }
                 dir('Backend') {
-                    sh "docker build . -t espoir10/backend:${IMAGE_TAG} -t espoir10/frontend:${LASTEST_TAG}"
+                    sh "docker build . -t espoir10/backend:${IMAGE_TAG} -t espoir10/backend:${LASTEST_TAG}"
                     }
             }
         }
