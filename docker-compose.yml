@@ -1,4 +1,5 @@
 #version: "3.9"
+
 services:
   mongo:
     image: mongo:6.0
@@ -8,12 +9,14 @@ services:
       - "27017:27017"
     environment:
       MONGO_INITDB_DATABASE: smartphoneDB
+    volumes:
+      - mongo-data:/data/db
     healthcheck:
-      test: ["CMD", "mongo", "--eval", "db.adminCommand('ping')"]
+      test: ["CMD-SHELL", "mongo --eval 'db.adminCommand(\"ping\")' || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 5
-      start_period: 5s
+      start_period: 30s
     networks:
       - fullstack-network
 
@@ -51,4 +54,3 @@ volumes:
 networks:
   fullstack-network:
     driver: bridge
-
