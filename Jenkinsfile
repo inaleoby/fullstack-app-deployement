@@ -6,7 +6,7 @@ pipeline {
         IMAGE_TAG = "v${BUILD_NUMBER}" // Tag dynamique basé sur le numéro de build (BUIL_NUMBER renvoit le numero du build)
         LASTEST_TAG = "latest"
         PORT = "5000"
-        MONGO_URI = "mongodb://mongo:27017/smartphoneDB"
+        MONGO_URI = "mongodb://mongodb:27017/smartphoneDB"
         DELETE_CODE = "123"
     }
     stages {
@@ -61,15 +61,15 @@ pipeline {
             steps {
                 script {
                     // Génère .env à partir des variables Jenkins
-                    writeFile file: '.env', text: """
+                    /*writeFile file: '.env', text: """
                     PORT=${PORT}
                     MONGO_URI=${MONGO_URI}
                     DELETE_CODE=${DELETE_CODE}
-                    """
+                    """$*/
 
                     // Relance docker-compose
                     sh 'docker compose down'
-                    //sh 'docker compose up -d'
+                    sh 'docker compose up -d'
                 }
             }
         }

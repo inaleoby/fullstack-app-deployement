@@ -12,6 +12,10 @@ connectDB();
 // Création de l’application Express
 const app = express();
 
+app.get('/', (req, res) => {
+  res.send('Backend is running ✅');
+});
+
 // Autoriser un body JSON plus gros (ex: 10mb)
 app.use(express.json({ limit: "10mb" }));
 
