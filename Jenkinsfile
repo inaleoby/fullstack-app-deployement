@@ -10,21 +10,28 @@ pipeline {
         DELETE_CODE = "123"
     }
     stages {
-        //stage('CLONER DEPOT') {
-            //steps {
-               // checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'GIT-CRED', url: 'https://github.com/inaleoby/fullstack-app-deployement.git']])
-            //}
-        //}
-        /*stage('BUILD IMAGES DOCKER') {
-            steps {
-                dir('Frontend') {
-                    sh "docker build . -t espoir10/frontend:${IMAGE_TAG} -t espoir10/frontend:${LASTEST_TAG}"
+
+        stage('BUILD IMAGES DOCKER') {
+            
+            parallel {
+                stage('Build Frontend') {
+                    steps {
+                        dir('frontend') {
+                            sh "docker build . -t espoir10/frontend:${IMAGE_TAG} -t espoir10/frontend:latest"
                     }
-                dir('Backend') {
-                    sh "docker build . -t espoir10/backend:${IMAGE_TAG} -t espoir10/backend:${LASTEST_TAG}"
-                    }
+                }
             }
-        }*/
+
+                stage('Build Backend') {
+                    steps {
+                        dir('backend') {
+                            sh "docker build . -t espoir10/backend:${IMAGE_TAG} -t espoir10/backend:latest"
+                    }
+                }
+            }
+        }
+    }
+
         
         stage('LOGIN TO DOCKER HUB') { 
             steps {
@@ -32,7 +39,7 @@ pipeline {
             }
         }
 
-        /*stage('PUSH IMAGES') {
+        stage('PUSH IMAGES') {
             steps {
                 sh """
                 docker push espoir10/frontend:${IMAGE_TAG}
@@ -41,37 +48,21 @@ pipeline {
                 docker push espoir10/backend:${LASTEST_TAG}
                 """
             }
-        }*/
-      
-        /*stage('DEPLOY') {
-            steps {
-                sh """
-                
-                export PORT=${PORT}
-                export MONGO_URI=${MONGO_URI}
-                export DELETE_CODE=${DELETE_CODE}
+        }
 
-                docker compose down  # Arrête les anciens conteneurs s'ils existent
-                docker compose up -d  # Démarre les nouveaux conteneurs en arrière-plan
-                """
-            }
-        } */
-
-       /*stage('Deploy') {
+       stage('Deploy') {
             steps {
-                // Relance docker-compose
-                    //sh 'docker compose down'
-                    //sh 'docker compose up -d'
-                    echo "HELLLO"
-            }
-        }*/
+                    sh 'docker compose down'
+                    sh 'docker compose up -d'
+                   
+        }
 
     }
 
 post {
     success {
         emailext (
-            subject: "✅ Build réussi - ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+            subject: "✅ BUILD REUSSI - ${env.JOB_NAME} #${env.BUILD_NUMBER}",
             body: """<html>
                         <body>
                             <p>Bonjour,</p>
@@ -88,7 +79,7 @@ post {
 
     failure {
         emailext (
-            subject: "❌ Build échoué - ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+            subject: "❌ BUILD ECHOUE - ${env.JOB_NAME} #${env.BUILD_NUMBER}",
             body: """<html>
                         <body>
                             <p>Bonjour,</p>
