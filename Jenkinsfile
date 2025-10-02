@@ -69,7 +69,7 @@ pipeline {
 
                     // Relance docker-compose
                     sh 'docker compose down'
-                   // sh 'docker compose up -d'
+                    sh 'docker compose up -d'
                 }
             }
         }
