@@ -31,7 +31,7 @@ pipeline {
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
             }
         }
-        
+
         /*stage('PUSH IMAGES') {
             steps {
                 sh """
@@ -69,7 +69,7 @@ pipeline {
 
                     // Relance docker-compose
                     sh 'docker compose down'
-                    sh 'docker compose up -d'
+                    //sh 'docker compose up -d'
                 }
             }
         }
