@@ -69,31 +69,45 @@ pipeline {
     }
 
 post {
-        success {
-            emailext (
-                subject: "✅ Build réussi - ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                body: """<p>Bonjour,</p>
-                         <p>Le job <b>${env.JOB_NAME}</b> (build #${env.BUILD_NUMBER}) a été exécuté avec succès.</p>
-                         <p>Consultez les logs ici : <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
-                         <p>Cordialement,<br/>Jenkins</p>""",
-                to: 'obympeespoir@gmail.com'
-            )
-        }
-
-        failure {
-            emailext (
-                subject: "❌ Build échoué - ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                body: """<p>Bonjour,</p>
-                         <p>Le job <b>${env.JOB_NAME}</b> (build #${env.BUILD_NUMBER}) a échoué.</p>
-                         <p>Consultez les logs ici : <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
-                         <p>Cordialement,<br/>Jenkins</p>""",
-                to: 'obympeespoir@gmail.com'
-            )
-        }
-
-        always {
-            // Optionnel : nettoyage ou déconnexion Docker
-            sh 'docker logout'
-        }
+    success {
+        emailext (
+            subject: "✅ Build réussi - ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+            body: """<html>
+                        <body>
+                            <p>Bonjour,</p>
+                            <p>Le job <b>${env.JOB_NAME}</b> (build #${env.BUILD_NUMBER}) a été exécuté avec succès.</p>
+                            <p>Consultez les logs ici : <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
+                        </body>
+                     </html>""",
+            to: 'obympeespoir@gmail.com',
+            from: 'oldpipa16@gmail.com',
+            replyTo: 'oldpipa16@gmail.com',
+            mimeType: 'text/html'
+        )
     }
+
+    failure {
+        emailext (
+            subject: "❌ Build échoué - ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+            body: """<html>
+                        <body>
+                            <p>Bonjour,</p>
+                            <p>Le job <b>${env.JOB_NAME}</b> (build #${env.BUILD_NUMBER}) a échoué.</p>
+                            <p>Consultez les logs ici : <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
+                        </body>
+                     </html>""",
+            to: 'obympeespoir@gmail.com',
+            from: 'oldpipa16@gmail.com',
+            replyTo: 'oldpipa16@gmail.com',
+            mimeType: 'text/html'
+        )
+    }
+
+    always {
+        // Optionnel : nettoyage ou déconnexion Docker
+        sh 'docker logout'
+    }
+    
+    }
+
 }
