@@ -14,7 +14,7 @@ stages {
         parallel {
             stage('Build Frontend') {
                 steps {
-                    dir('frontend') {
+                    dir('Frontend') {
                         sh "docker build . -t espoir10/frontend:${IMAGE_TAG} -t espoir10/frontend:latest"
                     }
                 }
@@ -22,7 +22,7 @@ stages {
 
             stage('Build Backend') {
                 steps {
-                    dir('backend') {
+                    dir('Backend') {
                         sh "docker build . -t espoir10/backend:${IMAGE_TAG} -t espoir10/backend:latest"
                     }
                 }
