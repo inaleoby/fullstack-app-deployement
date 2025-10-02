@@ -59,38 +59,38 @@ pipeline {
 
     }
 
-post {
-    success {
-        emailext (
-            subject: "✅ BUILD REUSSI - ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-            body: """<html>
+    post {
+        success {
+            emailext (
+                subject: "✅ BUILD REUSSI - ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                    body: """<html>
                         <body>
                             <p>Bonjour,</p>
                             <p>Le job <b>${env.JOB_NAME}</b> (build #${env.BUILD_NUMBER}) a été exécuté avec succès.</p>
                             <p>Consultez les logs ici : <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
                         </body>
                      </html>""",
-            to: 'obympeespoir@gmail.com, dangawa2000@gmail.com, oldpipa16@gmail.com, ndiayekhardiata2024@gmail.com',
-            from: 'oldpipa16@gmail.com',
-            replyTo: 'oldpipa16@gmail.com',
-            mimeType: 'text/html'
+                    to: 'obympeespoir@gmail.com, dangawa2000@gmail.com, oldpipa16@gmail.com, ndiayekhardiata2024@gmail.com',
+                    from: 'oldpipa16@gmail.com',
+                    replyTo: 'oldpipa16@gmail.com',
+                    mimeType: 'text/html'
         )
     }
 
-    failure {
-        emailext (
-            subject: "❌ BUILD ECHOUE - ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-            body: """<html>
+        failure {
+            emailext (
+                subject: "❌ BUILD ECHOUE - ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                    body: """<html>
                         <body>
                             <p>Bonjour,</p>
                             <p>Le job <b>${env.JOB_NAME}</b> (build #${env.BUILD_NUMBER}) a échoué.</p>
                             <p>Consultez les logs ici : <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></p>
                         </body>
                      </html>""",
-            to: 'obympeespoir@gmail.com',
-            from: 'oldpipa16@gmail.com',
-            replyTo: 'oldpipa16@gmail.com',
-            mimeType: 'text/html'
+                    to: 'obympeespoir@gmail.com',
+                    from: 'oldpipa16@gmail.com',
+                    replyTo: 'oldpipa16@gmail.com',
+                    mimeType: 'text/html'
         )
     }
 
